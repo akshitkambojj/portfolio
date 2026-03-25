@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import akshitAvatar from "../assets/akshit.png";
 
 const personalInfo = [
   { label: "Name", value: "Akshit Kamboj" },
@@ -37,7 +38,10 @@ const skillSections = [
 ];
 
 const handleDownload = () => {
-  window.location.href = "/api/download-cv";
+  const link = document.createElement("a");
+  link.href = "/ak new cv 26.pdf";
+  link.download = "Akshit_Kamboj_CV.pdf";
+  link.click();
 };
 
 export default function About() {
@@ -102,7 +106,7 @@ export default function About() {
             <div className="about__bio-wrap">
               <div className="about__avatar-ring">
                 <img
-                  src="/src/assets/akshit.png"
+                  src={akshitAvatar}
                   alt="Akshit Kamboj"
                   className="about__avatar"
                 />
