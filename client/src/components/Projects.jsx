@@ -1,6 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { MeshGradient } from "@paper-design/shaders-react";
 
+import certCipherSchools from "../assets/cert_cipherschools.png";
+import certIbm from "../assets/cert_ibm.png";
+import certGoogle from "../assets/cert_google.png";
+
 const projects = [
   {
     title: "PriceMate – Smart Price Comparison Platform",
@@ -32,7 +36,7 @@ const testimonials = [
     date: "July 2025",
     certId: "CSW2025-13026",
     desc: "Successfully completed training in Data Structures Algorithms at Lovely Professional University, certified by CipherSchools, India. Signed by Anurag Mishra, Founder CipherSchools.",
-    cert: "/src/assets/cert_cipherschools.png",
+    cert: certCipherSchools,
   },
   {
     title: "Hardware & Operating Systems",
@@ -40,7 +44,7 @@ const testimonials = [
     date: "Sep 8, 2024",
     certId: "Coursera Verified",
     desc: "Successfully completed Introduction to Hardware and Operating Systems, an online non-credit course authorized by IBM and offered through Coursera. Signed by Bav Ahuja, Global Program Director, IBM Skills Network.",
-    cert: "/src/assets/cert_ibm.png",
+    cert: certIbm,
   },
   {
     title: "Computer Networking",
@@ -48,7 +52,7 @@ const testimonials = [
     date: "Sep 7, 2024",
     certId: "Coursera Verified",
     desc: "Successfully completed The Bits and Bytes of Computer Networking, an online non-credit course authorized by Google and offered through Coursera.",
-    cert: "/src/assets/cert_google.png",
+    cert: certGoogle,
   },
 ];
 
