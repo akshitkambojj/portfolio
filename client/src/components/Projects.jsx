@@ -247,30 +247,33 @@ export default function Projects() {
                     <div className="cert-flip__back-overlay">
                       <span className="cert-flip__back-label">{t.title}</span>
                       <span className="cert-flip__back-issuer">{t.issuer} · {t.date}</span>
-                      {t.pdfLink ? (
-                        <a
-                          href={`${import.meta.env.BASE_URL}${t.pdfLink}`}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="cert-download-btn"
-                          style={{ textDecoration: "none" }}
-                          onClick={(e) => e.stopPropagation()}
-                          onTouchStart={(e) => e.stopPropagation()}
-                        >
-                          <i className="fas fa-eye" /> View Certificate
-                        </a>
-                      ) : (
+                      <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                         <button
                           className="cert-download-btn"
                           onClick={(e) => {
                             e.stopPropagation();
-                            setPreview({ src: t.cert, title: t.title, issuer: t.issuer, date: t.date });
+                            setPreview({ src: t.cert, title: t.title, issuer: t.issuer, date: t.date, pdfLink: t.pdfLink });
                           }}
                           onTouchStart={(e) => e.stopPropagation()}
                         >
                           <i className="fas fa-eye" /> View Certificate
                         </button>
-                      )}
+                        
+                        {t.pdfLink && (
+                          <a
+                            href={`${import.meta.env.BASE_URL}${t.pdfLink}`}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="cert-download-btn"
+                            style={{ textDecoration: "none" }}
+                            onClick={(e) => e.stopPropagation()}
+                            onTouchStart={(e) => e.stopPropagation()}
+                            download="Akshit_Kamboj_CV.pdf"
+                          >
+                            <i className="fas fa-download" /> Download PDF
+                          </a>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -292,12 +295,24 @@ export default function Projects() {
             <div className="cert-modal__img-wrap">
               <img src={preview.src} alt={preview.title} className="cert-modal__img" />
             </div>
-            <div className="cert-modal__footer">
+            <div className="cert-modal__footer" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
               <div className="cert-modal__info">
                 <span className="cert-modal__title">{preview.title}</span>
                 <span className="cert-modal__meta">{preview.issuer} · {preview.date}</span>
               </div>
-
+              {preview.pdfLink && (
+                <a
+                  href={`${import.meta.env.BASE_URL}${preview.pdfLink}`}
+                  download="Akshit_Kamboj_CV.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="cert-download-btn"
+                  style={{ textDecoration: "none", margin: 0 }}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <i className="fas fa-file-pdf" /> Download PDF
+                </a>
+              )}
             </div>
           </div>
         </div>
