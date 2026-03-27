@@ -56,6 +56,23 @@ const testimonials = [
     cert: certGoogle,
   },
 ];
+const forceDownload = async (url, filename) => {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    const objectUrl = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.style.display = "none";
+    a.href = objectUrl;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    window.URL.revokeObjectURL(objectUrl);
+    document.body.removeChild(a);
+  } catch (err) {
+    console.error("Download failed", err);
+  }
+};
 
 export default function Projects() {
   const headingRef = useRef(null);
@@ -260,18 +277,16 @@ export default function Projects() {
                         </button>
                         
                         {t.pdfLink && (
-                          <a
-                            href={`${import.meta.env.BASE_URL}${t.pdfLink}`}
-                            target="_blank"
-                            rel="noreferrer"
+                          <button
                             className="cert-download-btn"
-                            style={{ textDecoration: "none" }}
-                            onClick={(e) => e.stopPropagation()}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              forceDownload(`${import.meta.env.BASE_URL}${t.pdfLink}`, "Akshit_Kamboj_CV.pdf");
+                            }}
                             onTouchStart={(e) => e.stopPropagation()}
-                            download="Akshit_Kamboj_CV.pdf"
                           >
                             <i className="fas fa-download" /> Download PDF
-                          </a>
+                          </button>
                         )}
                       </div>
                     </div>
@@ -301,17 +316,16 @@ export default function Projects() {
                 <span className="cert-modal__meta">{preview.issuer} · {preview.date}</span>
               </div>
               {preview.pdfLink && (
-                <a
-                  href={`${import.meta.env.BASE_URL}${preview.pdfLink}`}
-                  download="Akshit_Kamboj_CV.pdf"
-                  target="_blank"
-                  rel="noreferrer"
+                <button
                   className="cert-download-btn"
-                  style={{ textDecoration: "none", margin: 0 }}
-                  onClick={(e) => e.stopPropagation()}
+                  style={{ margin: 0 }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    forceDownload(`${import.meta.env.BASE_URL}${preview.pdfLink}`, "Akshit_Kamboj_CV.pdf");
+                  }}
                 >
                   <i className="fas fa-file-pdf" /> Download PDF
-                </a>
+                </button>
               )}
             </div>
           </div>
