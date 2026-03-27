@@ -38,10 +38,7 @@ const skillSections = [
 ];
 
 const handleDownload = () => {
-  const link = document.createElement("a");
-  link.href = "/ak new cv 26.pdf";
-  link.download = "Akshit_Kamboj_CV.pdf";
-  link.click();
+  window.location.href = "/api/download-cv";
 };
 
 export default function About() {

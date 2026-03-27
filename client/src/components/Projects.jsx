@@ -11,21 +11,21 @@ const projects = [
     desc: "Engineered a smart web-based price comparison platform that aggregates and compares product prices across multiple e-commerce sources, enabling users to identify the best deals efficiently and reducing manual price-search effort by 45%. Built dynamic product search, category-based filtering, and real-time price range comparison. Developed a scalable backend with secure API integration and structured data handling, ensuring reliable price retrieval and seamless communication.",
     tags: ["HTML", "CSS", "JavaScript", "React.js", "Node.js", "MongoDB"],
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop",
-    link: "#",
+    link: "https://github.com/Ashwani-52/PriceMate-Smart-Price-Comparison-Platform",
   },
   {
     title: "Daily Expenses Tracker - Personal Finance Management",
     desc: "Implemented features such as interactive charts, automated expense summaries, and user-friendly UI components to help users track and manage daily spending effectively. Integrated AI-powered insights to automatically analyze user expenses, categorize spending patterns, and provide smart suggestions for better financial planning. Significantly reduced manual effort by automating expense tracking and report generation, enabling users to make quick and informed financial decisions.",
     tags: ["HTML", "CSS", "JavaScript", "React.js", "Node.js"],
     image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?q=80&w=1200&auto=format&fit=crop",
-    link: "#",
+    link: "https://github.com/AkshitKamboj",
   },
   {
     title: "Food Delivery Mobile App",
     desc: "Cross-platform food delivery application with real-time order tracking, driver app, admin panel, and secure payment gateway. Built for iOS and Android.",
     tags: ["React Native", "Node.js", "MongoDB", "Socket.io", "Expo"],
     image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=1200&auto=format&fit=crop",
-    link: "#",
+    link: "https://github.com/AkshitKamboj",
   },
 ];
 
@@ -60,6 +60,15 @@ export default function Projects() {
   const headingRef = useRef(null);
   const sliderRef = useRef(null);
   const [current, setCurrent] = useState(0);
+  const [flipped, setFlipped] = useState({});
+  const [preview, setPreview] = useState(null); // { src, title, issuer, date }
+
+  // Close modal on Escape
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") setPreview(null); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
 
   const prev = () => setCurrent((c) => (c === 0 ? projects.length - 1 : c - 1));
   const next = () => setCurrent((c) => (c === projects.length - 1 ? 0 : c + 1));
@@ -205,24 +214,99 @@ export default function Projects() {
 
           <div className="testimonials__grid">
             {testimonials.map((t, i) => (
-              <div key={i} className="testimonial-card hover-target">
-                <div className="testimonial-card__cert">
-                  <img src={t.cert} alt={`${t.title} Certificate`} />
-                  <div className="cert__overlay" />
+              <div
+                key={i}
+                className={`testimonial-card hover-target${flipped[i] ? " is-flipped" : ""}`}
+                onMouseEnter={() => setFlipped((f) => ({ ...f, [i]: true }))}
+                onMouseLeave={() => setFlipped((f) => ({ ...f, [i]: false }))}
+                onTouchStart={() => setFlipped((f) => ({ ...f, [i]: !f[i] }))}
+              >
+                <div className="cert-flip">
+                  {/* ── FRONT ── */}
+                  <div className="cert-flip__front">
+                    <div className="testimonial-card__cert">
+                      <img src={t.cert} alt={`${t.title} Certificate`} />
+                      <div className="cert__overlay" />
+                    </div>
+                    <div className="testimonial-card__meta">
+                      <span className="testimonial-card__issuer">{t.issuer}</span>
+                      <span className="testimonial-card__date">{t.date}</span>
+                    </div>
+                    <h4 className="testimonial-card__title">{t.title}</h4>
+                    <p className="testimonial-card__desc">{t.desc}</p>
+                    <span className="testimonial-card__certid">ID: {t.certId}</span>
+                    <div className="cert-flip__hint">
+                      <i className="fas fa-eye" /> View Certificate
+                    </div>
+                  </div>
+
+                  {/* ── BACK ── */}
+                  <div className="cert-flip__back">
+                    <img src={t.cert} alt={`${t.title} Certificate`} className="cert-flip__back-img" />
+                    <div className="cert-flip__back-overlay">
+                      <span className="cert-flip__back-label">{t.title}</span>
+                      <span className="cert-flip__back-issuer">{t.issuer} · {t.date}</span>
+                      <button
+                        className="cert-download-btn"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setPreview({ src: t.cert, title: t.title, issuer: t.issuer, date: t.date });
+                        }}
+                      >
+                        <i className="fas fa-download" /> Download PNG
+                      </button>
+                    </div>
+                  </div>
                 </div>
-                <div className="testimonial-card__meta">
-                  <span className="testimonial-card__issuer">{t.issuer}</span>
-                  <span className="testimonial-card__date">{t.date}</span>
-                </div>
-                <h4 className="testimonial-card__title">{t.title}</h4>
-                <p className="testimonial-card__desc">{t.desc}</p>
-                <span className="testimonial-card__certid">ID: {t.certId}</span>
               </div>
             ))}
           </div>
+
         </div>
 
       </div>
+
+      {/* ── Certificate Preview Modal ── */}
+      {preview && (
+        <div className="cert-modal-backdrop" onClick={() => setPreview(null)}>
+          <div className="cert-modal" onClick={(e) => e.stopPropagation()}>
+            <button className="cert-modal__close" onClick={() => setPreview(null)}>
+              <i className="fas fa-times" />
+            </button>
+            <div className="cert-modal__img-wrap">
+              <img src={preview.src} alt={preview.title} className="cert-modal__img" />
+            </div>
+            <div className="cert-modal__footer">
+              <div className="cert-modal__info">
+                <span className="cert-modal__title">{preview.title}</span>
+                <span className="cert-modal__meta">{preview.issuer} · {preview.date}</span>
+              </div>
+              <button
+                className="cert-modal__download-btn"
+                onClick={async () => {
+                  try {
+                    const res = await fetch(preview.src);
+                    const blob = await res.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement("a");
+                    a.style.display = "none";
+                    a.href = url;
+                    a.download = `${preview.title.replace(/[^a-z0-9]/gi, "_")}_Certificate.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                  } catch (err) {
+                    console.error("Download failed", err);
+                  }
+                }}
+              >
+                <i className="fas fa-download" /> Download PNG
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }

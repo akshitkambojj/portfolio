@@ -4,7 +4,7 @@ import myPhoto from "../assets/akshit.png";
 
 const socials = [
   { icon: "fab fa-github", href: "https://github.com/", label: "GH" },
-  { icon: "fab fa-linkedin-in", href: "https://linkedin.com/", label: "LI" },
+  { icon: "fab fa-linkedin-in", href: "https://www.linkedin.com/in/akshit-kamboj-9855142a1?utm_source=share_via&utm_content=profile&utm_medium=member_android", label: "LI" },
   { icon: "fab fa-dribbble", href: "#", label: "DR" },
   { icon: "fab fa-behance", href: "#", label: "BE" },
   { icon: "fab fa-twitter", href: "#", label: "TW" },

@@ -13,7 +13,7 @@ const socials = [
   { icon: "fab fa-dribbble", href: "#", label: "dribbble" },
   { icon: "fab fa-behance", href: "#", label: "behance" },
   { icon: "fab fa-twitter", href: "#", label: "twitter" },
-  { icon: "fab fa-linkedin-in", href: "#", label: "linkedin" },
+  { icon: "fab fa-linkedin-in", href: "https://www.linkedin.com/in/akshit-kamboj-9855142a1?utm_source=share_via&utm_content=profile&utm_medium=member_android", label: "linkedin" },
   { icon: "fab fa-instagram", href: "#", label: "instagram" },
 ];
 
