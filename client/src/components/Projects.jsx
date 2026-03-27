@@ -247,19 +247,30 @@ export default function Projects() {
                     <div className="cert-flip__back-overlay">
                       <span className="cert-flip__back-label">{t.title}</span>
                       <span className="cert-flip__back-issuer">{t.issuer} · {t.date}</span>
-                      <button
-                        className="cert-download-btn"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          if (t.pdfLink) {
-                            window.open(`${import.meta.env.BASE_URL}${t.pdfLink}`, "_blank");
-                          } else {
+                      {t.pdfLink ? (
+                        <a
+                          href={`${import.meta.env.BASE_URL}${t.pdfLink}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="cert-download-btn"
+                          style={{ textDecoration: "none" }}
+                          onClick={(e) => e.stopPropagation()}
+                          onTouchStart={(e) => e.stopPropagation()}
+                        >
+                          <i className="fas fa-eye" /> View Certificate
+                        </a>
+                      ) : (
+                        <button
+                          className="cert-download-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
                             setPreview({ src: t.cert, title: t.title, issuer: t.issuer, date: t.date });
-                          }
-                        }}
-                      >
-                        <i className="fas fa-eye" /> View Certificate
-                      </button>
+                          }}
+                          onTouchStart={(e) => e.stopPropagation()}
+                        >
+                          <i className="fas fa-eye" /> View Certificate
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>
