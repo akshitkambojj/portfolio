@@ -253,7 +253,7 @@ export default function Projects() {
                           setPreview({ src: t.cert, title: t.title, issuer: t.issuer, date: t.date });
                         }}
                       >
-                        <i className="fas fa-download" /> Download PNG
+                        <i className="fas fa-eye" /> View Certificate
                       </button>
                     </div>
                   </div>
@@ -281,28 +281,7 @@ export default function Projects() {
                 <span className="cert-modal__title">{preview.title}</span>
                 <span className="cert-modal__meta">{preview.issuer} · {preview.date}</span>
               </div>
-              <button
-                className="cert-modal__download-btn"
-                onClick={async () => {
-                  try {
-                    const res = await fetch(preview.src);
-                    const blob = await res.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement("a");
-                    a.style.display = "none";
-                    a.href = url;
-                    a.download = `${preview.title.replace(/[^a-z0-9]/gi, "_")}_Certificate.png`;
-                    document.body.appendChild(a);
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(a);
-                  } catch (err) {
-                    console.error("Download failed", err);
-                  }
-                }}
-              >
-                <i className="fas fa-download" /> Download PNG
-              </button>
+
             </div>
           </div>
         </div>
