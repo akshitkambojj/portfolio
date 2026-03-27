@@ -37,6 +37,7 @@ const testimonials = [
     certId: "CSW2025-13026",
     desc: "Successfully completed training in Data Structures Algorithms at Lovely Professional University, certified by CipherSchools, India. Signed by Anurag Mishra, Founder CipherSchools.",
     cert: certCipherSchools,
+    pdfLink: "Akshit_Kamboj.pdf",
   },
   {
     title: "Hardware & Operating Systems",
@@ -250,7 +251,11 @@ export default function Projects() {
                         className="cert-download-btn"
                         onClick={(e) => {
                           e.stopPropagation();
-                          setPreview({ src: t.cert, title: t.title, issuer: t.issuer, date: t.date });
+                          if (t.pdfLink) {
+                            window.open(`${import.meta.env.BASE_URL}${t.pdfLink}`, "_blank");
+                          } else {
+                            setPreview({ src: t.cert, title: t.title, issuer: t.issuer, date: t.date });
+                          }
                         }}
                       >
                         <i className="fas fa-eye" /> View Certificate
